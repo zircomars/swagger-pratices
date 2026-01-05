@@ -1,0 +1,13 @@
+tärkeämmät paketti lataukset & käyttö ;;
+npm init -y  (package.json)
+npm i express
+npm i swagger-ui-express
+npm i swagger-jsdoc
+
+npm install --save swagger-jsdoc swagger-ui-express express nodemon
+
+tiedoston luonti kuin Linux toi mkdir, tää on toisenalinen
+https://www.geeksforgeeks.org/touch-command-in-linux-with-examples/
+touch <file_name>
+
+npm start
