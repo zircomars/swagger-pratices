@@ -1,0 +1,58 @@
+/* Tämä on valmis js pohja sovellus, että itse saa säätää siitä eteenpäin mitä haluaa. Eli lisää swagger ohjelmiston ominaisuuksia, mitkä liittyy siihen RESTful tiedonsiirtoon.
+
+RESTful;;
+Verkkopalvelun sovellusliittymiä, jotka noudattavat REST-arkkitehtuurirajoituksia, kutsutaan RESTful-sovellusliittymiksi. HTTP-pohjaiset RESTful-sovellusliittymät määritetään seuraavilla näkökohdilla: perus- URI , kuten http://api.example.com/; tavalliset HTTP-menetelmät (esim. GET, POST, PUT ja DELETE); median tyyppi , joka määrittelee tilan siirtymää dataelementit (esim Atom, mikromuotojen, sovellus / vnd.collection + json, jne.). Nykyinen esitys kertoo asiakkaalle, kuinka laatia siirtymispyynnöt kaikkiin seuraaviin käytettävissä oleviin sovellustiloihin. Tämä voi olla yhtä yksinkertaista kuin URI tai yhtä monimutkainen kuin Java-sovelma.
+
+Ennen sitä pitää antaa terminal (komentolähteeseen) mitä npm pakettia pitää ladata. 
+NPM on pakettihallintaohjelmisto javascriptiin varten.npm on JavaScript-ajonaikaisen ympäristön Node.js paketin oletushallinta . Se koostuu komentoriviasiakkaasta, jota kutsutaan myös nimellä npm, ja online-tietokannasta julkisista ja maksetuista yksityisistä paketeista, nimeltään npm-rekisteri. Rekisteriin pääsee asiakkaan kautta, ja saatavilla olevia paketteja voi selata ja hakea npm-verkkosivuston kautta.
+
+terminal / shell (komentolähde)
+npm & muu install lataukset;;
+npm init -y
+npm i express
+npm install nodemon / npm install --save-dev nodemon
+
+swagger paketit;;
+npm i swagger-jsdoc swagger-ui-express
+*/
+
+//tämä on pääsovellus
+/* ohje & tutorials:: https://www.youtube.com/watch?v=apouPYPh_as
+
+https://github.com/brian-childress/node-autogenerate-swagger-documentation
+*/
+
+const express = require('express');
+const app = express();
+const swaggerJsDoc = require('swagger-jsdoc');
+const swaggerUi = require('swagger-ui-express');
+
+const port = process.env.PORT || 8080;
+
+//extemded>>> ttps://swagger.io/specification/#infoObject
+const swaggerOptions = {
+  swaggerDefinition: {
+    info: {
+      version: "1.2.3",
+      title: "Customers API",
+      description: "Customers API infot",
+      contact: {
+        name: "Jotakin jännää"
+      },
+    },
+  },
+  //['.routes/*js]
+  apis: ["index.js"],
+};
+
+const swaggerDocs = swaggerJsDoc(swaggerOptions);
+app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerDocs));
+
+app.get('/customers', (req, res) => {
+  console.log("request");
+  res.status(200).send("Henkilo results");
+});
+
+app.listen(port, () => {
+  console.log(`Serveri käynnistyy porttiin... ${port}`);
+});
